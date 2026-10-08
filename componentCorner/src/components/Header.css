@@ -1,0 +1,139 @@
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    min-height: 88px;
+    padding: 0 7vw;
+    border-bottom: 1px solid var(--line);
+}
+
+.wordmark,
+.header-action,
+.nav-link {
+    text-decoration: none;
+}
+
+.wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.wordmark-mark {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--cream);
+    background: var(--ink);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: -0.1em;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 32px;
+    margin-left: auto;
+}
+
+.nav-link {
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 600;
+    transition: color 180ms ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link.is-active {
+    color: var(--coral);
+}
+
+.header-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: color 180ms ease, background 180ms ease;
+}
+
+.header-action:hover,
+.header-action:focus-visible {
+    color: var(--cream);
+    background: var(--ink);
+}
+
+/* Cart badge styles generated with AI assistance. */
+.cart-link {
+    position: relative;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    padding: 9px;
+    border: 0;
+    border-radius: 0;
+}
+
+.cart-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.6;
+}
+
+.cart-link:hover,
+.cart-link:focus-visible {
+    color: var(--coral);
+    background: transparent;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: grid;
+    width: 21px;
+    height: 21px;
+    place-items: center;
+    border: 2px solid var(--paper);
+    border-radius: 50%;
+    color: var(--cream);
+    background: var(--coral);
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1;
+}
+
+@media (max-width: 640px) {
+    .site-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px 16px;
+        min-height: 72px;
+        padding: 0 24px;
+    }
+
+    .nav-menu {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        gap: 24px;
+        padding-bottom: 12px;
+    }
+
+    .nav-link {
+        font-size: 13px;
+    }
+}
