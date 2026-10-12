@@ -59,11 +59,27 @@ const products = [
   },
 ];
 
+function isValidCartItem(item) {
+  return (
+    item !== null &&
+    typeof item === 'object' &&
+    !Array.isArray(item) &&
+    typeof item.name === 'string' &&
+    typeof item.price === 'number' &&
+    Number.isFinite(item.price) &&
+    typeof item.cartItemId === 'string'
+  );
+}
+
 function readSavedCart() {
   try {
     const savedCart = window.localStorage.getItem('componentcorner-cart');
     const parsedCart = savedCart ? JSON.parse(savedCart) : [];
-    return Array.isArray(parsedCart) ? parsedCart : [];
+    if (!Array.isArray(parsedCart)) {
+      return [];
+    }
+
+    return parsedCart.filter(isValidCartItem);
   } catch {
     return [];
   }
@@ -73,7 +89,14 @@ function App() {
   const [cart, setCart] = useState(readSavedCart);
 
   useEffect(() => {
-    window.localStorage.setItem('componentcorner-cart', JSON.stringify(cart));
+    try {
+      window.localStorage.setItem(
+        'componentcorner-cart',
+        JSON.stringify(cart.filter(isValidCartItem)),
+      );
+    } catch {
+      // Ignore storage write failures so the app still works with transient browser limits.
+    }
   }, [cart]);
 
   function addToCart(product) {

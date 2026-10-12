@@ -93,4 +93,28 @@ describe('App cart state', () => {
     expect(screen.getByTestId('cart-count')).toHaveTextContent('0');
     expect(setItem).toHaveBeenLastCalledWith(storageKey, '[]');
   });
+
+  it('ignores malformed items in stored cart data', () => {
+    const savedCart = [
+      { cartItemId: 'valid-1', name: 'Valid Desk Light', price: 128 },
+      { broken: true },
+      'not-an-object',
+    ];
+    vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify(savedCart));
+
+    render(<App />);
+
+    expect(screen.getByTestId('cart-count')).toHaveTextContent('1');
+    expect(screen.queryByText('Valid Desk Light')).not.toBeInTheDocument();
+  });
+
+  it('does not throw when localStorage write fails', () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('Storage unavailable');
+    });
+
+    expect(() => render(<App />)).not.toThrow();
+    expect(() => fireEvent.click(screen.getByRole('link', { name: 'Home page' }))).not.toThrow();
+  });
 });
